@@ -1,3 +1,6 @@
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 type Props = {
     id: number,
     cover: string,
@@ -23,21 +26,28 @@ const Card = ({ id, cover, title, percentage, style }: Props ) => {
                         src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cover}`}
                         alt="capa do filme"
                     />
-                    {percentage &&
-                        <div className="grid place-items-center bg-cine23-100 w-12 h-12 absolute bottom-3 right-3 rounded-full">
-                            <div className="rounded-full w-11 h-11 border-4  border-ligth-200">
-
-                            </div>
-
-                            <div
-                                className="grid place-items-center absolute rounded-full w-11 h-11 border-4  border-cine23-300"
-                                data-deg={`${percentage}`}
-                            >
-                                <p className="text-ligth-100 text-sm font-semibold">
-                                    {percentage + "%"}
-                                </p>
-                            </div>
-                        </div>
+                    { percentage && percentage>0  
+                        ? 
+                            <CircularProgressbar
+                                strokeWidth={12}
+                                className="w-12 h-12 absolute bottom-3 right-3 bg-cine23-100 rounded-full p-1"
+                                value={percentage} 
+                                text={`${percentage}%`}
+                                styles={{
+                                    path: {
+                                    stroke: `rgba(255, 0, 199, ${percentage / 100})`
+                                    },
+                                    trail: {
+                                    stroke: '#FFF'
+                                    },
+                                    text: {
+                                    fill: '#FFF',
+                                    fontSize: '30px',
+                                    }
+                                }}
+                                
+                            />
+                        : <></>
                     }
                 </div>
 

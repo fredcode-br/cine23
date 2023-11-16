@@ -14,7 +14,7 @@ const ListCard = ({ titles }: Props) => {
           id={title.id}
           cover={title.backdrop_path}
           title={title.title}
-          percentage={title.popularity}
+          percentage={Math.floor(title.vote_average*10)}
           style={{ 
             flexBasis: 'calc(20% - 1rem)'
           }} 
