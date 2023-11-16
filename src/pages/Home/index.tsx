@@ -2,17 +2,21 @@ import { useEffect, useState } from "react";
 
 import apiData from "../../apiData";
 
-import Container from "../../components/Container";
-import ITitles from "../../Types/ITitles";
-import Card from "./Card";
 import ITitle from "../../Types/ITitle";
+import ITitles from "../../Types/ITitles";
+
+import Container from "../../components/Container";
 import Hero from "./Hero";
-import ContainerXL from "../../components/ContainerXL";
+import Search from "./Search";
+import ListCard from "./ListCard";
+import Pagination from "./Pagination";
+import Loader from "../../components/Loader";
 
 export default function Home() {
     const [titles, setTitles] = useState<ITitles>(); 
     const [hero, setHero] = useState<ITitle>(); 
     const [searchTerm, setSearchTerm] = useState<string>("")
+    const [ page, setPage ] = useState<number>(1);
     const [loading, setLoading] = useState(false)
  
     const getTitles = async (page: number, searchTerm: string ="") => {
@@ -24,53 +28,43 @@ export default function Home() {
     }
 
     useEffect(() => {
-        getTitles(1, searchTerm)
+        getTitles(page, searchTerm)
     }, [searchTerm])
 
 
-    const handlePagination = (titles: ITitles) => {
-        getTitles(titles.page + 1)
+    const handlePagination = (page: number) => {
+        setPage(page);
+        getTitles(page, searchTerm);
     }
     
     return (
         <section 
             className="bg-background-200 flex flex-col items-center"
             style={{minHeight: 'calc(100vh - 272px)'}}
-        >  
-            <ContainerXL>
-                <>
-                    { hero &&
-                        <Hero 
-                            id={hero.id}
-                            imagePath={hero.backdrop_path}
-                            title={hero.title}
-                            overview={hero.overview}                    
-                        />
-                    }
-                </>
-            </ContainerXL>
-            <Container customClass="py-14 px-20">    
+        >          
+            { hero &&
+                <Hero 
+                    id={hero.id}
+                    imagePath={hero.backdrop_path}
+                    title={hero.title}
+                    overview={hero.overview}                    
+                />
+            }
+            <Search setTerm={setSearchTerm} />
+            <Container customClass="py-14">    
                <>
                     { !loading && titles 
                         ?   
-                            <ul className="w-full flex justify-start gap-4 flex-wrap">
-                                {titles.results.map((title) => 
-                                    <Card 
-                                        id={title.id}
-                                        cover={title.backdrop_path}
-                                        title={title.title}
-                                        date={title.release_date}
-                                        runtime={title.runtime}
-                                        percentage={title.popularity}
-                                    />     
-                                )}
-                            </ul>
+                            <ListCard titles={titles.results} />
                         : 
-                            <div
-                                className=""
-                            >
-                                Carregando
-                            </div>
+                            <Loader />
+                    }
+                    {  titles &&
+                        <Pagination 
+                            currentPage={page} 
+                            totalPages={titles?.total_pages} 
+                            onPageChange={handlePagination}
+                        />
                     }
                </>
             </Container>
