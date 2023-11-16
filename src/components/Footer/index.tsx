@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
+
 import Container from "../Container";
 
 import instagram from "../../assets/icons/instagram.svg";
 import linkedin from "../../assets/icons/linkedin.svg";
 import github from "../../assets/icons/github.svg";
-import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
@@ -11,7 +12,7 @@ export default function Footer() {
             <Container>
                 <div className="flex flex-col items-center">
                     <div className="flex text-center text-white p-3">
-                           <p>Este site foi constrído utilizando a API de </p>  
+                           <p>Este site foi construído utilizando a API de </p>  
                             <Link 
                                 to="https://www.themoviedb.org/"
                             >

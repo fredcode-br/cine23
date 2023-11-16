@@ -7,7 +7,7 @@ export default function BasePage() {
     return (
         <>
             <Header />
-            <main>
+            <main className=" h-full">
                 <Outlet />
             </main>
             <Footer />

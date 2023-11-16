@@ -1,7 +1,8 @@
-export default interface IMovie {
+export default interface ITitle {
     adult: boolean;
     backdrop_path: string;
     belongs_to_collection: {
+    genre_ids?: number[];
     id: number;
     name: string;
     poster_path: string;
@@ -12,6 +13,8 @@ export default interface IMovie {
     id: number;
     name: string;
     }[];
+    name: string;
+    media_type?: string;
     homepage: string;
     id: number;
     imdb_id: string;
@@ -45,3 +48,4 @@ export default interface IMovie {
     vote_average: number;
     vote_count: number;
 }
+

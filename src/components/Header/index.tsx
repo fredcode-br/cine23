@@ -10,13 +10,13 @@ function Header() {
    
     return (
         
-        <header className="flex bg-background-100 items-center justify-center py-4 px-16">
+        <header className="flex bg-background-100 items-center justify-center h-20 py-3 px-16">
             <Container>
                 <div className="flex w-full justify-between items-center">
                     <NavLink to="/">
                         <img src={logo} alt="logo" />
                     </NavLink>
-                    <div className='flex gap-4'>
+                    <div className='flex items-center gap-4'>
                         <NavLink to="https://github.com/fredcode-br/cine23">
                             <img src={gitHub} alt="github" />
                         </NavLink>
