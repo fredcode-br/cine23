@@ -6,6 +6,8 @@ import ITitle from "../../Types/ITitle";
 import Loader from "../../components/Loader";
 import IActors from "../../Types/IActors";
 import ListActors from "./ListActors";
+import { ModalProvider, useModalContext } from "../../common/context/Modal";
+import ModalActor from "./ModalActor";
 
 
 export default function Title() {
@@ -13,13 +15,18 @@ export default function Title() {
     const [ title, setTitle ] = useState<ITitle>()
     const [ actors, setActors ] = useState<IActors>()
     const [loading, setLoading] = useState(true)
-    
+    const { open, setOpen, openModal } = useModalContext();
+
     const getTitle = async (id: number, type: string = "") => {
-        const newTitle = await apiData.getTitle({id: id, type: type}) 
-        if(newTitle){
-            setTitle(newTitle);
-            setLoading(false)
-        }
+        await apiData.getTitle({id: id, type: type}).then(
+            resp =>  {resp &&
+                setTitle(resp); 
+                setLoading(false); 
+                console.log(resp);
+            }
+        ) .catch(erro => console.log(erro))
+
+      
     }
 
     const getActors = async (id: number, type: string = "") => {
@@ -38,14 +45,12 @@ export default function Title() {
         const minutesRemaining = time % 60;
         return `${hours}h ${minutesRemaining}min`;
     }
-
-    getTitle(Number(id), type)
-    useEffect(() => {		
-		
-        getActors(Number(id), type)
+   
+    getTitle(Number(id), type);
+    useEffect(() => {			
+        getActors(Number(id), type);
 	}, [id, type])
     
-  
 
     return (
         <section 
@@ -97,6 +102,12 @@ export default function Title() {
                                 {
                                     actors && <ListActors actors={actors.cast}/>
                                 }
+
+                                {
+                                    open && <ModalActor />
+                                }
+                                
+                            
                             </>
                         :
                             <Loader />

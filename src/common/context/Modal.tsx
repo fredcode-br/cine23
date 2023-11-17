@@ -1,33 +1,30 @@
 import { createContext, useContext, ReactNode, useState } from 'react';
-import IModalContext from "../../Types/IModalContext";
+import { ModalContextType } from "../../Types/modal";
 
 type Props = {
     children?: ReactNode;
 };
 
-const DEFAUL_VALUE = {
-    idActor: -1,
+const DEFAULT_VALUE  = {
+    idActor: 0,
     setIdActor: () => {},
-    isOpen: false,
-    setIsOpen: () => {}
+    open: false,
+    setOpen: () => {}
 };
 
-export const ModalContext = createContext<IModalContext>(DEFAUL_VALUE);
+export const ModalContext = createContext<ModalContextType>(DEFAULT_VALUE );
 ModalContext.displayName = "Modal";
 
 export const ModalProvider = ({ children }: Props) => {
-    const [ idActor, setIdActor ] = useState<number>(-1)
-    const [ isOpen, setIsOpen ] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false);
+    const [idActor, setIdActor] = useState<number>(0);
     
     return (
-        <ModalContext.Provider 
-            value={{ 
-                idActor,
-                setIdActor,
-                isOpen, 
-                setIsOpen
-            }}
-        >
+        <ModalContext.Provider value={{ 
+            idActor,
+            setIdActor,
+            open, 
+            setOpen     }}>
             { children }
         </ModalContext.Provider>
     )
@@ -35,17 +32,29 @@ export const ModalProvider = ({ children }: Props) => {
 
 export const useModalContext = () => {
     const { 
+        open, 
+        setOpen,
         idActor,
-        setIdActor,
-        isOpen, 
-        setIsOpen
+        setIdActor
     } = useContext(ModalContext);
     
+    // useEffect(() => {
+    //     if (idActor !== 0 && !open) {
+    //         setOpen(true);
+    //     }
+    // }, [idActor, open]);
+    
+
+    function openModal(id: number) {
+        setIdActor(id)
+        setOpen(true)
+    }
 
     return {
         idActor,
         setIdActor,
-        isOpen, 
-        setIsOpen
+        open, 
+        setOpen,
+        openModal
     }
 }

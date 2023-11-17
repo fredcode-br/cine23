@@ -7,7 +7,6 @@ type Props = {
 };
 
 export default function CardActor ({ key, id, image, name, character }: Props) {
-
     return (
         <div
             className="border w-48  h-72 flex flex-col justify-between cursor-pointer bg-background-300 hover:bg-background-200 text-white text-center border-gray-300 p-2"

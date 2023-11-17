@@ -1,9 +1,14 @@
+
+
 export default function ModalActor () {
+    
+
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-8 max-w-md text-left">
                 <button
-                className="text-blue-500 text-sm font-medium mb-4"
+                    className="text-blue-500 text-sm font-medium mb-4"
                 >
                 Close
                 </button>
