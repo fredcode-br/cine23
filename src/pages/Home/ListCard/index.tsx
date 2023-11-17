@@ -1,4 +1,4 @@
-import Card from '../Card';
+import Card from './Card';
 import ITitle from '../../../Types/ITitle';
 
 type Props = {
@@ -15,6 +15,7 @@ const ListCard = ({ titles }: Props) => {
           cover={title.backdrop_path}
           title={title.title}
           percentage={Math.floor(title.vote_average*10)}
+          type={title.media_type}
           style={{ 
             flexBasis: 'calc(20% - 1rem)'
           }} 

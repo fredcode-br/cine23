@@ -1,10 +1,30 @@
-import { useEffect, useState } from "react";
-import IQuery from "./Types/ITitles";
+import { useState, useEffect } from 'react';
+import ITitle from './Types/ITitle';
 
-export default function useFetch<T>({ url }: { url: string }) {
-    const [dados, setDados] = useState<IQuery | null>();
-    const [erro, setErro] = useState('');
-    
-
-    return { dados, erro }
+type Props = {
+  data: ITitle | null;
+  error: string | null;
+  loading: boolean;
 }
+
+const useFetch = async (url: string) => {
+    const [data, setData] = useState<Props>({ data: null, error: null, loading: true });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const resp = await fetch(url);
+                const result = await resp.json();
+                setData({ data: result, error: null, loading: false });
+            } catch (error) {
+                setData({ data: null, error: 'Erro na requisição', loading: false });
+            }
+        };
+    fetchData();
+  }, [url]);
+
+  return data;
+};
+
+export default useFetch;
+

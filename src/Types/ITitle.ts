@@ -14,7 +14,7 @@ export default interface ITitle {
     name: string;
     }[];
     name: string;
-    media_type?: string;
+    media_type: string;
     homepage: string;
     id: number;
     imdb_id: string;

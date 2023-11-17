@@ -6,15 +6,16 @@ type Props = {
     cover: string,
     title: string,
     percentage?: number,
+    type: string
     style?: React.CSSProperties
 }
 
-const Card = ({ id, cover, title, percentage, style }: Props ) => {
+const Card = ({ id, cover, title, percentage, type, style }: Props ) => {
     return (
         <li
             className="rounded-lg hover:scale-101 cursor-pointer ps-1 "
             style={style}
-        >   <a href={`/title/${id}`}>
+        >   <a href={`/${type}/${id}`}>
                 <div
                     className="rounded-lg overflow-hidden relative"
                     style={{

@@ -8,8 +8,9 @@ function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<BasePage />}>
+                    <Route path="/home" element={<Home />} />
                     <Route index element={<Home />} />
-                    <Route path="/title/:id" element={<Title />} />
+                    <Route path="/:type/:id" element={<Title />} />
                 </Route>
             </Routes>
         </BrowserRouter>

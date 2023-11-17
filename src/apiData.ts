@@ -1,10 +1,15 @@
+import IActors from "./Types/IActors";
+import ITitle from "./Types/ITitle";
 import ITitles from "./Types/ITitles";
+import useFetch from "./useFetch";
 
 type Props = {
-    page: number,
-    searchTerm: string,
+    id?: number,
+    type?: string,
+    page?: number,
+    searchTerm?: string,
 }
-// API_KEY, API_BASE_URL, TRENDING_BASE_URL, SEARCH_BASE_URL
+
 class ApiData {
     apiKey: string;
     apiBaseUrl: string;
@@ -24,7 +29,6 @@ class ApiData {
             : `${this.trendingBaseUrl}&page=${page}`);
         
         const titles:ITitles = await resp.json();
-
         titles.results = titles.results
             .filter(res => res.media_type !== "person")
         	.map(title => ({
@@ -36,18 +40,21 @@ class ApiData {
         return titles
     }
 
-		
-	// 	titles.results = titles.results
-	// 		.filter(res => res.media_type !== "person")
-	// 		.map(title => ({
-	// 			...title,
-	// 			backdrop_path: title.backdrop_path ? IMAGE_BASE_URL + "/w1280" + title.backdrop_path : null,
-	// 			poster_path: title.poster_path ? IMAGE_BASE_URL + "/w342" + title.poster_path : null,
-	// 			title: title.media_type === "movie" ? title.title : title.name 
-	// 		}))
+    async getTitle({id, type }: Props) {
+        const url:string = `${this.apiBaseUrl}/${type}/${id}?api_key=${this.apiKey}&language=pt-BR`;
+        const data  = await useFetch(url);
+        const title = data.data
+        return title
+    }
+ 
+    async getActors({ id, type }: Props) {
+        const url:string = `${this.apiBaseUrl}/${type}/${id}/credits?api_key=${this.apiKey}&language=pt-BR`;
+        const resp = await fetch(url);
+        const actors:IActors = await resp.json();
+    
+        return actors
+    }
 
-
-   
 }
 
 
